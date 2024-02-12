@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
             FishingGameTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Player one")
+                    Greeting("Player one!")
                 }
             }
         }
