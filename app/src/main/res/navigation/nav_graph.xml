@@ -18,5 +18,14 @@
         android:id="@+id/gameScreenFragment"
         android:name="com.example.fishinggame.GameScreenFragment"
         android:label="fragment_game_screen"
-        tools:layout="@layout/fragment_game_screen" />
+        tools:layout="@layout/fragment_game_screen" >
+        <action
+            android:id="@+id/action_gameScreenFragment_to_cathingFragment"
+            app:destination="@id/cathingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cathingFragment"
+        android:name="com.example.fishinggame.CathingFragment"
+        android:label="fragment_cathing"
+        tools:layout="@layout/fragment_cathing" />
 </navigation>
