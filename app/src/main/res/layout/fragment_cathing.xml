@@ -23,12 +23,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.503" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/imageButton"
-        android:layout_width="145dp"
-        android:layout_height="133dp"
+        android:layout_width="215dp"
+        android:layout_height="209dp"
         android:contentDescription="@string/reel"
-        android:src="@android:drawable/ic_menu_rotate"
+        android:scaleType="fitXY"
+        android:src="@drawable/rite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
