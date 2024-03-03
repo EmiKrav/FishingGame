@@ -14,14 +14,21 @@ class MainScreenFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         val binding = FragmentMainScreenBinding.inflate(inflater)
+        val args = MainScreenFragmentArgs.fromBundle(requireArguments())
+        val prog = args.Pinigai;
+        var sk = args.Pinigai;
 
         binding.button
             .setOnClickListener {
-                findNavController()
-                    .navigate(R.id.action_mainScreenFragment_to_gameScreenFragment)
+                val action =
+                    MainScreenFragmentDirections.actionMainScreenFragmentToGameScreenFragment(sk)
+                findNavController().navigate(action)
             }
+
+
 
         return binding.root
     }

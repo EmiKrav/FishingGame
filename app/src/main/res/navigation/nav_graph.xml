@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_gameScreenFragment"
             app:destination="@id/gameScreenFragment" />
+        <argument
+            android:name="Pinigai"
+            app:argType="float"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/gameScreenFragment"
@@ -22,10 +26,39 @@
         <action
             android:id="@+id/action_gameScreenFragment_to_cathingFragment"
             app:destination="@id/cathingFragment" />
+        <argument
+            android:name="Pinigai"
+            app:argType="float"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_gameScreenFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/cathingFragment"
         android:name="com.example.fishinggame.CathingFragment"
         android:label="fragment_cathing"
-        tools:layout="@layout/fragment_cathing" />
+        tools:layout="@layout/fragment_cathing" >
+        <action
+            android:id="@+id/action_cathingFragment_to_fishFragment"
+            app:destination="@id/fishFragment" />
+        <argument
+            android:name="Pinigai"
+            app:argType="float"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/fishFragment"
+        android:name="com.example.fishinggame.FishFragment"
+        android:label="fragment_fish"
+        tools:layout="@layout/fragment_fish" >
+        <action
+            android:id="@+id/action_fishFragment_to_gameScreenFragment"
+            app:destination="@id/gameScreenFragment"
+            app:launchSingleTop="false" />
+        <argument
+            android:name="Pinigai"
+            app:argType="float"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
