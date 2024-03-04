@@ -27,19 +27,26 @@ class CathingFragment : Fragment() {
     var pritrauktas : Int = 0
 
 
+    var sk: Float = 0F
+    var kiekis: Int = 0
+    var Laikas: String =""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
+
         binding = FragmentCathingBinding.inflate(inflater)
+
 
         binding.imageView2.isVisible = false
         binding.button2.isVisible = true
         binding.button2.isClickable = true
 
         if (savedInstanceState !=null){
-
+            sk = savedInstanceState.getFloat("Pinigai");
+            kiekis = savedInstanceState.getInt("Kiekis");
+            Laikas = savedInstanceState.getString("Laikas").toString();
             binding.button2.visibility = savedInstanceState.getInt("Kirtimas");
             if (binding.button2.visibility == VISIBLE) {
                 binding.button2.isClickable = true;
@@ -71,6 +78,10 @@ class CathingFragment : Fragment() {
 
         }
         else{
+            val args = FishFragmentArgs.fromBundle(requireArguments())
+            sk = args.Pinigai;
+            kiekis = args.Kiekis;
+            Laikas = args.Laikas.toString();
             suka()
             setClicked()
         }
@@ -205,12 +216,9 @@ class CathingFragment : Fragment() {
 
         pritrauktas++
 
-        val args = GameScreenFragmentArgs.fromBundle(requireArguments())
-        val prog = args.Pinigai;
-        var sk = args.Pinigai;
-        if (pritrauktas == 5){
+        if (pritrauktas == 1){
             val action =
-                CathingFragmentDirections.actionCathingFragmentToFishFragment(sk)
+                CathingFragmentDirections.actionCathingFragmentToFishFragment(sk,kiekis,Laikas)
             findNavController().navigate(action)
         }
         else{
@@ -264,6 +272,13 @@ class CathingFragment : Fragment() {
           outState.putFloat("ScreenX", resources.displayMetrics.widthPixels.toFloat())
           outState.putFloat("ScreenY", resources.displayMetrics.heightPixels.toFloat())
           outState.putInt("Pritraukta", pritrauktas)
+        outState.putFloat("Pinigai", sk)
+        outState.putInt("Kiekis", kiekis);
+        outState.putString("Laikas", Laikas)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
 }

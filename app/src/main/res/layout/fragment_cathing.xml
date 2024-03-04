@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#806846"
-            android:text="@string/Kirsti"
+            android:text="@string/Strike"
             android:textSize="34sp"
             app:layout_constraintBottom_toTopOf="@+id/Rite"
             app:layout_constraintEnd_toEndOf="parent"
