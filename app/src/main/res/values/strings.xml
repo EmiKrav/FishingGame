@@ -51,4 +51,10 @@
     <string name="Zuvis">Zuvis</string>
     <string name="atgal">Atgal</string>
     <string name="Strike">Strike</string>
+    <string name="play">Play</string>
+    <string name="exit">Exit</string>
+    <string name="history">History</string>
+    <string name="Kiekis">0</string>
+    <string name="laikas">Laikas</string>
+    <string name="laikai">Laikai:</string>
 </resources>

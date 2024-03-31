@@ -44,9 +44,6 @@ class CathingFragment : Fragment() {
         binding.button2.isClickable = true
 
         if (savedInstanceState !=null){
-            sk = savedInstanceState.getFloat("Pinigai");
-            kiekis = savedInstanceState.getInt("Kiekis");
-            Laikas = savedInstanceState.getString("Laikas").toString();
             binding.button2.visibility = savedInstanceState.getInt("Kirtimas");
             if (binding.button2.visibility == VISIBLE) {
                 binding.button2.isClickable = true;
@@ -78,10 +75,6 @@ class CathingFragment : Fragment() {
 
         }
         else{
-            val args = FishFragmentArgs.fromBundle(requireArguments())
-            sk = args.Pinigai;
-            kiekis = args.Kiekis;
-            Laikas = args.Laikas.toString();
             suka()
             setClicked()
         }
@@ -218,7 +211,7 @@ class CathingFragment : Fragment() {
 
         if (pritrauktas == 1){
             val action =
-                CathingFragmentDirections.actionCathingFragmentToFishFragment(sk,kiekis,Laikas)
+                CathingFragmentDirections.actionCathingFragmentToFishFragment()
             findNavController().navigate(action)
         }
         else{
@@ -272,9 +265,6 @@ class CathingFragment : Fragment() {
           outState.putFloat("ScreenX", resources.displayMetrics.widthPixels.toFloat())
           outState.putFloat("ScreenY", resources.displayMetrics.heightPixels.toFloat())
           outState.putInt("Pritraukta", pritrauktas)
-        outState.putFloat("Pinigai", sk)
-        outState.putInt("Kiekis", kiekis);
-        outState.putString("Laikas", Laikas)
     }
 
     override fun onDestroy() {

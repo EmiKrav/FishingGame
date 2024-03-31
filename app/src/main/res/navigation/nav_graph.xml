@@ -11,20 +11,8 @@
         android:label="fragment_main_screen"
         tools:layout="@layout/fragment_main_screen" >
         <action
-            android:id="@+id/action_mainScreenFragment_to_gameScreenFragment"
-            app:destination="@id/gameScreenFragment" />
-        <argument
-            android:name="Pinigai"
-            android:defaultValue="0"
-            app:argType="float" />
-        <argument
-            android:name="Kiekis"
-            app:argType="integer"
-            android:defaultValue="0" />
-        <argument
-            android:name="Laikas"
-            app:argType="string"
-            android:defaultValue="Laikai:" />
+            android:id="@+id/action_mainScreenFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameScreenFragment"
@@ -35,20 +23,8 @@
             android:id="@+id/action_gameScreenFragment_to_cathingFragment"
             app:destination="@id/cathingFragment" />
         <action
-            android:id="@+id/action_gameScreenFragment_to_mainScreenFragment"
-            app:destination="@id/mainScreenFragment" />
-        <argument
-            android:name="Pinigai"
-            app:argType="float"
-            android:defaultValue="0" />
-        <argument
-            android:name="Kiekis"
-            app:argType="integer"
-            android:defaultValue="0" />
-        <argument
-            android:name="Laikas"
-            app:argType="string"
-            android:defaultValue="Laikai:" />
+            android:id="@+id/action_gameScreenFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/cathingFragment"
@@ -61,18 +37,6 @@
         <action
             android:id="@+id/action_cathingFragment_to_gameScreenFragment"
             app:destination="@id/gameScreenFragment" />
-        <argument
-            android:name="Pinigai"
-            app:argType="float"
-            android:defaultValue="0" />
-        <argument
-            android:name="Kiekis"
-            app:argType="integer"
-            android:defaultValue="0" />
-        <argument
-            android:name="Laikas"
-            app:argType="string"
-            android:defaultValue="Laikai:" />
     </fragment>
     <fragment
         android:id="@+id/fishFragment"
@@ -83,17 +47,29 @@
             android:id="@+id/action_fishFragment_to_gameScreenFragment"
             app:destination="@id/gameScreenFragment"
             app:launchSingleTop="false" />
-        <argument
-            android:name="Pinigai"
-            app:argType="float"
-            android:defaultValue="0" />
-        <argument
-            android:name="Kiekis"
-            app:argType="integer"
-            android:defaultValue="0" />
-        <argument
-            android:name="Laikas"
-            app:argType="string"
-            android:defaultValue="Laikai:" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.fishinggame.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_gameScreenFragment"
+            app:destination="@id/gameScreenFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.fishinggame.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
 </navigation>

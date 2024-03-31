@@ -1,6 +1,7 @@
 package com.example.fishinggame
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,56 +23,24 @@ class GameScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
-
-        if (savedInstanceState !=null) {
-
-            sk = savedInstanceState.getFloat("Pinigai");
-            kiekis = savedInstanceState.getInt("Kiekis");
-
-            Laikas = savedInstanceState.getString("Laikas").toString();
-        }
-        else
-        {
-           val args = GameScreenFragmentArgs.fromBundle(requireArguments())
-            sk = args.Pinigai;
-            kiekis = args.Kiekis;
-            Laikas = args.Laikas.toString();
-        }
-
         val binding = FragmentGameScreenBinding.inflate(inflater)
 
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             val action =
-                GameScreenFragmentDirections.actionGameScreenFragmentToMainScreenFragment(sk,kiekis,Laikas)
+                GameScreenFragmentDirections.actionGameScreenFragmentToMenuFragment()
             findNavController().navigate(action)
         }
-
-
-                binding.textView.text = "$sk";
-                binding.textView2.text = "$kiekis";
-
-                binding.textView6.text = "$Laikas"
 
 
 
          binding.imageView
            .setOnClickListener {
                val action =
-                   GameScreenFragmentDirections.actionGameScreenFragmentToCathingFragment(sk,kiekis, Laikas)
+                   GameScreenFragmentDirections.actionGameScreenFragmentToCathingFragment()
                findNavController().navigate(action)
            }
 
         return binding.root
     }
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-
-        outState.putFloat("Pinigai", sk);
-        outState.putInt("Kiekis", kiekis);
-        outState.putString("Laikas", Laikas)
-    }
-
 }
