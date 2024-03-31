@@ -40,10 +40,17 @@ class HistoryFragment : Fragment() {
 
             binding.Kiekis.text = "Kiekis: $it";
         }
-
+        binding.Laikai.text = "Laikai: ";
         viewModel.getLaikai.observe(viewLifecycleOwner) {
 
             Laikas = it;
+            var HistoryList: MutableList<History> = mutableListOf(
+                History(Laikas)
+            )
+
+            val recycler = binding.Recy
+            recycler.layoutManager = LinearLayoutManager(context)
+            recycler.adapter = HistoryAdapter(HistoryList)
         }
 
 
@@ -63,13 +70,6 @@ class HistoryFragment : Fragment() {
 
 
 
-        var HistoryList: MutableList<History> = mutableListOf(
-            History(Laikas)
-        )
-
-         val recycler = binding.Recy
-        recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = HistoryAdapter(HistoryList)
 
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

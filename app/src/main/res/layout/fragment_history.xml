@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/pinigai"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/Kiekis"
+        app:layout_constraintBottom_toTopOf="@+id/Laikai"
         app:layout_constraintEnd_toStartOf="@+id/Kiekis"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,10 +26,23 @@
         android:layout_height="wrap_content"
         android:text="@string/Kiekis"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/Recy"
+        app:layout_constraintBottom_toTopOf="@+id/Laikai"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Pinigai"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/Laikai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/laikai"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/Recy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Recy"
@@ -38,9 +51,9 @@
         android:background="#89BCD1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Kiekis"
+        app:layout_constraintTop_toBottomOf="@+id/Laikai"
         tools:itemCount="12"
         tools:listitem="@layout/item_history" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

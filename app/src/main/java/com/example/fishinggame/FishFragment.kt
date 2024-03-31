@@ -28,38 +28,15 @@ class FishFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        var sk: Float = 0F
-        var kiekis: Int = 0
-        var Laikas: String =""
+
 
         val binding = FragmentFishBinding.inflate(inflater)
 
 
         val viewModel: DataStoreViewModel by viewModels()
-
-//        if (savedInstanceState !=null) {
-//
-//            sk = savedInstanceState.getFloat("Pinigai");
-//            kiekis = savedInstanceState.getInt("Kiekis");
-//            Laikas = savedInstanceState.getString("Laikas").toString();
-//            val TAG = "Rot";
-//            Log.v(TAG,sk.toString());
-//        }
-//        else{
-//            viewModel.getPinigai.observe(viewLifecycleOwner) {
-//                sk = it;
-//            }
-//            viewModel.getKiekis.observe(viewLifecycleOwner) {
-//                kiekis = it;
-//            }
-//            viewModel.getLaikai.observe(viewLifecycleOwner) {
-//                Laikas = it;
-//            }
-//            sk += 2;
-//            kiekis += 1;
-//            Laikas += System.lineSeparator()+LocalDateTime.now().
-//            format(DateTimeFormatter.ofPattern("yyyy:MM:dd - HH:mm:ss")).toString();
-//        }
+        var sk: Float = 0F;
+        var kiekis: Int = 0
+        var Laikas: String =""
         viewModel.getPinigai.observe(viewLifecycleOwner) {
             sk = it;
         }
@@ -70,29 +47,31 @@ class FishFragment : Fragment() {
         viewModel.getLaikai.observe(viewLifecycleOwner) {
             Laikas = it;
         }
-        sk += 2F;
-        kiekis += 1;
-        Laikas += System.lineSeparator()+ LocalDateTime.now().
-        format(DateTimeFormatter.ofPattern("yyyy:MM:dd - HH:mm:ss")).toString();
-        viewModel.savePinigai(sk);
-        viewModel.saveKiekis(kiekis);
-        viewModel.saveLaikai(Laikas);
+        var laikas =  LocalDateTime.now().
+        format(DateTimeFormatter.ofPattern("yyyy:MM:dd - HH:mm:ss")).toString() + System.lineSeparator();
+
 
 
         binding.textView5.text = "Žuvis";
         binding.textView3.text = "0.5 kg";
-        viewModel.getPinigai.observe(viewLifecycleOwner) {
-            binding.textView4.text = "$it"
-        }
+        binding.textView4.text = "2 Eur"
+
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-
+            viewModel.savePinigai(sk + 2);
+            viewModel.saveKiekis(kiekis + 1);
+            viewModel.saveLaikai(Laikas +  System.lineSeparator()+ LocalDateTime.now().
+            format(DateTimeFormatter.ofPattern("yyyy:MM:dd - HH:mm:ss")).toString());
             val action =
                 FishFragmentDirections.actionFishFragmentToGameScreenFragment()
             findNavController().navigate(action)
         }
         binding.button3
             .setOnClickListener {
+                viewModel.savePinigai(sk + 2);
+                viewModel.saveKiekis(kiekis + 1);
+                viewModel.saveLaikai(Laikas +  System.lineSeparator()+ LocalDateTime.now().
+                format(DateTimeFormatter.ofPattern("yyyy:MM:dd - HH:mm:ss")).toString());
                 val action =
                     FishFragmentDirections.actionFishFragmentToGameScreenFragment()
                 findNavController().navigate(action)
