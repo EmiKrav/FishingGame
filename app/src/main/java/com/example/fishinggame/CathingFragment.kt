@@ -1,9 +1,9 @@
 package com.example.fishinggame
 
-import android.R.string
+import android.R.attr.data
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,68 +15,107 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.example.fishinggame.databinding.FragmentCathingBinding
-import kotlin.properties.Delegates
 import kotlin.random.Random
 
 
 class CathingFragment : Fragment() {
 
-    private lateinit var binding : FragmentCathingBinding
     var pritrauktas : Int = 0
+    var rnds = (1..10).random()
 
 
-    var sk: Float = 0F
-    var kiekis: Int = 0
-    var Laikas: String =""
+    var but2 : Int = 0
+    var imv2 : Int = 1
+    var imv2r : Float = 0F;
+    var MX : Float = 0F;
+    var MY : Float = 0F;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
+        var binding = FragmentCathingBinding.inflate(inflater);
 
-        binding = FragmentCathingBinding.inflate(inflater)
 
 
-        binding.imageView2.isVisible = false
-        binding.button2.isVisible = true
+        binding.imageView2.visibility = INVISIBLE
+        imv2 = binding.imageView2.visibility
+        binding.button2.visibility = VISIBLE
+        but2 = binding.button2.visibility;
         binding.button2.isClickable = true
+        val TAG = "MyActivity";
+
+
 
         if (savedInstanceState !=null){
             binding.button2.visibility = savedInstanceState.getInt("Kirtimas");
+            but2 =  binding.button2.visibility;
             if (binding.button2.visibility == VISIBLE) {
                 binding.button2.isClickable = true;
+                suka(binding)
+                setClicked(binding)
             }
             else{
                 binding.button2.isClickable = false;
-                val screenX = resources.displayMetrics.widthPixels;
-                val screenY = resources.displayMetrics.heightPixels;
-                val x = screenX /
-                        ( savedInstanceState.getFloat("ScreenX") / savedInstanceState.getFloat("X"));
-                val y = screenY /
-                        ( savedInstanceState.getFloat("ScreenY") / savedInstanceState.getFloat("Y"));
-                if(x < screenX/4 &&  x > 0){
-                   binding.Meskere.x = x;
+                val screenX = resources.displayMetrics.widthPixels
+                val screenY = resources.displayMetrics.heightPixels
+                val desine = 2 * screenX / 4
+                val apacia = 2* screenY / 4
+                val virsus = 2 * screenY / 4
+                val kaire = 0
+                var x = savedInstanceState.getFloat("X");
+                var y =  savedInstanceState.getFloat("Y");
+
+                if(x + desine < screenX &&  x > kaire) {
+                    binding.Meskere.x = x;
                 }
                 else {
-                    binding.Meskere.x = (screenX/4).toFloat();
-                }
+                        while (x + desine > screenX){
+                           x -= 1;
+                       }
+                        while (x < kaire){
+                            x += 1;
+                        }
 
-                binding.Meskere.y = y;
+                    binding.Meskere.x = x;
+                }
+                if(y + apacia < screenY &&  y > - virsus){
+                    binding.Meskere.y = y
+                }
+                else{
+                        while (y + apacia > screenY){
+                            y -= 1;
+                        }
+                        while (y < - virsus){
+                            y += 1;
+                        }
+                    binding.Meskere.y = y;
+                }
+                Log.v("TAG","MesYR: "+ binding.Meskere.y.toString());
+                Log.v("Tag","MesYR: "+ binding.Meskere.x.toString());
+
+                MX  = binding.Meskere.x;
+                MY = binding.Meskere.y;
 
                 pritrauktas = savedInstanceState.getInt("Pritraukta");
+                rnds = savedInstanceState.getInt("Reikia");
                 binding.imageView2.visibility = savedInstanceState.getInt("Rodykle");
+                imv2 = binding.imageView2.visibility;
                 binding.imageView2.rotation = savedInstanceState.getFloat("RodykleSukimas")
-                suka()
-                setClicked()
+                imv2r = binding.imageView2.rotation;
+                suka(binding)
+                setClicked(binding)
             }
 
 
         }
         else{
-            suka()
-            setClicked()
+            binding.button2.visibility = VISIBLE
+            but2 = binding.button2.visibility;
+            binding.button2.isClickable = true
+            suka(binding)
+            setClicked(binding)
         }
 
         return binding.root
@@ -85,27 +124,36 @@ class CathingFragment : Fragment() {
 
     var kimba = true;
 
-    private fun setClicked() {
-        suka()
-        if (binding.button2.isVisible) {
+    private fun setClicked(binding: FragmentCathingBinding) {
+        suka(binding)
+        if (binding.button2.visibility == VISIBLE) {
+            but2 = binding.button2.visibility
             binding.button2.isClickable = true
             binding.imageView2.isVisible = false
             binding.imageView2.visibility = INVISIBLE
+            imv2 = binding.imageView2.visibility
             binding.button2.setOnClickListener {
-                suka()
+                suka(binding)
                 if (kimba) {
                     binding.button2.isClickable = false
                     binding.button2.isVisible = false
+                    but2 = binding.button2.visibility;
                     binding.imageView2.isVisible = true
                     binding.imageView2.visibility = VISIBLE
-                    show()
-                    // Toast.makeText(getActivity(),"Užkirsta",Toast.LENGTH_SHORT).show();
+                    imv2 = binding.imageView2.visibility
+                    val list = listOf(90F, 180F, 0F, 270F)
+                    val randomIndex = Random.nextInt(list.size);
+
+                    binding.imageView2.rotation = list[randomIndex]
+                    imv2r = binding.imageView2.rotation;
+                   // Toast.makeText(activity,rnds.toString(),Toast.LENGTH_SHORT).show();
+                    show(binding)
                 }
             }
         }
         else{
-            suka()
-            show()
+            suka(binding)
+            show(binding)
         }
 
     }
@@ -117,99 +165,102 @@ class CathingFragment : Fragment() {
 
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun show() {
+    private fun show(binding: FragmentCathingBinding) {
 
 
 
         val screenWidth = resources.displayMetrics.widthPixels
         val screenHeight = resources.displayMetrics.heightPixels
-        val atskaitaX = screenWidth / 4
-        val atskaitaY = screenHeight / 2
+        val desine = 1 * screenWidth / 4
+        val apacia = 2* screenHeight / 4
+        val virsus = 2 * screenHeight / 4
+        val kaire = 0
 
 
         binding.Meskere.setOnTouchListener(OnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_MOVE) {
-                val xMove: Float
-                val yMove: Float
-                xMove = event.getX()
-                yMove = event.getY()
+                val xMove: Float = event.x
+                val yMove: Float = event.y
 
                 val distX: Float = xMove - xDown
                 val distY: Float = yMove - yDown
 
-                if(binding.Meskere.getX() + distX + atskaitaX < screenWidth &&  binding.Meskere.getX() + distX > 0){
-                    binding.Meskere.setX(binding.Meskere.getX() + distX)
-
+                if(binding.Meskere.x + distX + desine < screenWidth &&  binding.Meskere.getX() + distX > kaire){
+                    binding.Meskere.x = binding.Meskere.x + distX
+                    MX  = binding.Meskere.x;
                 }
-                if(binding.Meskere.getY() + distY + atskaitaY < screenHeight &&  binding.Meskere.getY() + distY > - atskaitaY){
-                    binding.Meskere.setY(binding.Meskere.getY() + distY)
+                if(binding.Meskere.y + distY + apacia < screenHeight &&  binding.Meskere.getY() + distY > - virsus){
+                    binding.Meskere.y = binding.Meskere.y + distY
+                    MY  = binding.Meskere.y;
                 }
 
 
                 if (binding.imageView2.rotation == 0F) {
-                    if (isRight(screenWidth, screenHeight)) {
+                    if (isRight(screenWidth, screenHeight, binding)) {
                        // val TAG = "MyActivity";
                         binding.imageView2.visibility = INVISIBLE
-                        suka()
+                        imv2 = binding.imageView2.visibility
+                        suka(binding)
                        // Log.v(TAG,suka().toString())
                         //     Log.v(TAG,"Rigth")
                      //   Log.v(TAG, binding.imageView2.rotation.toString())
                     }
                 }
                 if (binding.imageView2.rotation == 180F) {
-                    if (isLeft(screenWidth, screenHeight)) {
+                    if (isLeft(screenWidth, screenHeight, binding)) {
                         //   val TAG = "MyActivity";
                         binding.imageView2.visibility = INVISIBLE
-                        suka()
+                        imv2 = binding.imageView2.visibility
+                        suka(binding)
                         // Log.v(TAG,"Left")
                     }
                 }
                 if (binding.imageView2.rotation == 270F) {
-                    if (isUP(screenWidth, screenHeight)) {
+                    if (isUP(screenWidth, screenHeight, binding)) {
                         //   val TAG = "MyActivity";
 
                         binding.imageView2.visibility = INVISIBLE
-                        suka()
+                        imv2 = binding.imageView2.visibility
+                        suka(binding)
                         // Log.v(TAG,"UP")
                     }
                 }
                 if (binding.imageView2.rotation == 90F) {
-                    if (isDown(screenWidth, screenHeight)) {
+                    if (isDown(screenWidth, screenHeight, binding)) {
                         //   val TAG = "MyActivity";
 
                         binding.imageView2.visibility = INVISIBLE
-                        suka()
+                        imv2 = binding.imageView2.visibility
+                        suka(binding)
                         //    Log.v(TAG,"Down")
                     }
                 }
-                //   val TAG = "MyActivity";
+//                   val TAG = "MyActivity";
+//
+//                Log.v(TAG, "SH: $screenHeight");
+//                Log.v(TAG, "SW: $screenWidth");
 
-             //   Log.v(TAG,"SH: "+ screenHeight);
-               // Log.v(TAG,"SW: "+ screenWidth);
-              //  Log.v(TAG,"MY: "+ binding.Meskere.getY().toString());
-              //  Log.v(TAG,"MX: "+ binding.Meskere.getX().toString());
-              //  Log.v(TAG,"DY: "+  distY );
-              //  Log.v(TAG,"DX: "+  distX );
             }
             if (event.action == MotionEvent.ACTION_DOWN) {
-                xDown = event.getX();
-                yDown = event.getY();
-
-            }
-            if (event.action == MotionEvent.ACTION_UP) {
-                xUP = event.getX();
-                yUP = event.getY();
+                xDown = event.x;
+                yDown = event.y;
             }
             true
 
         });
+
     }
 
-    private fun change(){
+    private fun change(binding: FragmentCathingBinding){
 
         pritrauktas++
+        val list = listOf(90F, 180F, 0F, 270F)
+        val randomIndex = Random.nextInt(list.size);
 
-        if (pritrauktas == 1){
+        binding.imageView2.rotation = list[randomIndex]
+        imv2r = binding.imageView2.rotation;
+       // Toast.makeText(activity, "$pritrauktas/$rnds", Toast.LENGTH_SHORT).show()
+        if (pritrauktas == rnds){
             val action =
                 CathingFragmentDirections.actionCathingFragmentToFishFragment()
             findNavController().navigate(action)
@@ -219,10 +270,12 @@ class CathingFragment : Fragment() {
             val randomIndex = Random.nextInt(list.size);
 
             binding.imageView2.rotation = list[randomIndex]
+            imv2r = binding.imageView2.rotation;
             binding.imageView2.visibility = VISIBLE
+            imv2 = binding.imageView2.visibility
         }
     }
-    private fun suka() {
+    private fun suka(binding: FragmentCathingBinding) {
         // implement a setOnLongClickListener to the
         // button that creates a Toast and
         // returns true when actually long-pressed
@@ -231,44 +284,38 @@ class CathingFragment : Fragment() {
             binding.Rite.setOnLongClickListener {
                 //  Toast.makeText(activity, "Button Long Pressed", Toast.LENGTH_SHORT).show()
                 if (binding.imageView2.visibility == INVISIBLE) {
-                    change()
+                    change(binding)
                 }
                 true
             }
         }
     }
-    private fun isRight(sx: Int, sy: Int): Boolean {
+    private fun isRight(sx: Int, sy: Int, binding: FragmentCathingBinding): Boolean {
         return (binding.Meskere.x + binding.Meskere.measuredWidth > sx/2)
 
     }
-    private fun isLeft(sx: Int, sy: Int): Boolean {
+    private fun isLeft(sx: Int, sy: Int, binding: FragmentCathingBinding): Boolean {
         return (binding.Meskere.x + binding.Meskere.measuredWidth < sx/2)
 
     }
-    private fun isUP(sx: Int, sy: Int): Boolean {
+    private fun isUP(sx: Int, sy: Int, binding: FragmentCathingBinding): Boolean {
         return (binding.Meskere.y + (binding.Meskere.measuredHeight / 2) < sy/2)
 
     }
-    private fun isDown(sx: Int, sy: Int): Boolean {
+    private fun isDown(sx: Int, sy: Int, binding: FragmentCathingBinding): Boolean {
         return (binding.Meskere.y + (binding.Meskere.measuredHeight /2 ) > sy/2)
 
     }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-
-          outState.putInt("Kirtimas", binding.button2.visibility);
-          outState.putInt("Rodykle", binding.imageView2.visibility);
-          outState.putFloat("RodykleSukimas", binding.imageView2.rotation);
-          outState.putFloat("X", binding.Meskere.x)
-          outState.putFloat("Y", binding.Meskere.y)
-          outState.putFloat("ScreenX", resources.displayMetrics.widthPixels.toFloat())
-          outState.putFloat("ScreenY", resources.displayMetrics.heightPixels.toFloat())
-          outState.putInt("Pritraukta", pritrauktas)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+    outState.putInt("Kirtimas", but2);
+    outState.putInt("Rodykle", imv2);
+    outState.putFloat("RodykleSukimas", imv2r);
+     outState.putFloat("X", MX)
+     outState.putFloat("Y", MY)
+    outState.putInt("Pritraukta", pritrauktas)
+        outState.putInt("Reikia", rnds)
     }
 
 }
