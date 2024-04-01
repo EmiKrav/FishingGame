@@ -1,22 +1,22 @@
 package com.example.fishinggame
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.fishinggame.databinding.FragmentGameScreenBinding
 
 class GameScreenFragment : Fragment() {
 
-    var sk: Float = 0F
-    var kiekis: Int = 0
+   var kibimas = false
 
-    var Laikas: String =""
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +33,65 @@ class GameScreenFragment : Fragment() {
         }
 
 
+        val rnds = (1000..10000).random()
+       var laikokoluzkibs = rnds.toLong();
 
-         binding.imageView
+        timeris(binding, laikokoluzkibs);
+
+        binding.imageView
            .setOnClickListener {
-               val action =
-                   GameScreenFragmentDirections.actionGameScreenFragmentToCathingFragment()
-               findNavController().navigate(action)
+               if (kibimas) {
+                   val action =
+                       GameScreenFragmentDirections.actionGameScreenFragmentToCathingFragment()
+                   findNavController().navigate(action)
+                   kibimas = false
+               }
+               else{
+                   timeris(binding, laikokoluzkibs)
+               }
+
            }
 
         return binding.root
+    }
+    fun animacija( binding: FragmentGameScreenBinding, pozicija: Float){
+        val dur = 3000
+           ObjectAnimator.ofFloat(binding.imageView4, "translationX", pozicija).apply {
+                duration = dur.toLong()
+                start()
+            }
+
+        object : CountDownTimer(dur.toLong()+2000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+
+            }
+            override fun onFinish() {
+
+                kibimas = false;
+                ObjectAnimator.ofFloat(binding.imageView4, "translationX", 0F).apply {
+                    duration = 0
+                    start()
+                }
+                val rnds = (1000..10000).random()
+                var laikokoluzkibs = rnds.toLong();
+
+                timeris(binding, laikokoluzkibs);
+
+            }
+        }.start()
+    }
+    fun timeris (binding: FragmentGameScreenBinding, laikas: Long){
+        object : CountDownTimer(laikas, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+
+            }
+            override fun onFinish() {
+                kibimas = true;
+
+                val rnds = (-10000..10000).random()
+                var poz = rnds.toFloat();
+                animacija(binding, poz)
+            }
+        }.start()
     }
 }

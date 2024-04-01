@@ -18,9 +18,6 @@ import com.example.fishinggame.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
 
-    var sk: Float = 0F
-    var kiekis: Int = 0
-
     var Laikas: String =""
 
     override fun onCreateView(
@@ -34,7 +31,8 @@ class HistoryFragment : Fragment() {
         val viewModel: DataStoreViewModel by viewModels()
 
         viewModel.getPinigai.observe(viewLifecycleOwner) {
-            binding.Pinigai.text = "Pinigai: $it";
+            val p = String.format("%.2f", it)
+            binding.Pinigai.text = "Pinigai: $p €";
         }
         viewModel.getKiekis.observe(viewLifecycleOwner) {
 

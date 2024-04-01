@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -47,7 +48,18 @@ fun Context.readFloat(key: String): Flow<Float> {
         pref[floatPreferencesKey(key)] ?: 0F
     }
 }
+suspend fun Context.writeDouble(key: String, value: Double) {
+    dataStore.edit { pref -> pref[doublePreferencesKey(key)] = value }
+}
 
+/**
+ * Reading the float value from the data store
+ */
+fun Context.readDouble(key: String): Flow<Double> {
+    return dataStore.data.map { pref ->
+        pref[doublePreferencesKey(key)] ?: 0.0
+    }
+}
 suspend fun Context.writeString(key: String, value: String) {
     dataStore.edit { pref -> pref[stringPreferencesKey(key)] = value }
 }
