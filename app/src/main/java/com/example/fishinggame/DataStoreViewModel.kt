@@ -13,6 +13,8 @@ class DataStoreViewModel(val appContext: Application) : AndroidViewModel(appCont
         const val V1_USER_KEY = "name"
         const val V2_USER_KEY2 = "name2"
         const val V3_USER_KEY3 = "name3"
+        const val V4_USER_KEY4 = "name4"
+        const val V5_USER_KEY5 = "name5"
     }
 
     fun savePinigai(name: Float) {
@@ -41,5 +43,23 @@ class DataStoreViewModel(val appContext: Application) : AndroidViewModel(appCont
 
     //Getting the name of saved user
     val getLaikai = appContext.readString(V3_USER_KEY3).asLiveData()
+
+    fun saveEzerai(name4: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            appContext.writeString(V4_USER_KEY4, name4)
+        }
+    }
+
+    //Getting the name of saved user
+    val getEzerai = appContext.readString(V4_USER_KEY4).asLiveData()
+
+    fun savePaveiksliukas(name5: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            appContext.writeInt(V5_USER_KEY5, name5)
+        }
+    }
+
+    //Getting the name of saved user
+    val getPaveiksliukas = appContext.readInt(V5_USER_KEY5).asLiveData()
 
 }

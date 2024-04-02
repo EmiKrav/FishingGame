@@ -1,14 +1,14 @@
 package com.example.fishinggame
 
-import android.R.attr.data
+import android.R
 import android.annotation.SuppressLint
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.INVISIBLE
-import android.view.View.OnTouchListener
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
@@ -23,6 +23,9 @@ class CathingFragment : Fragment() {
 
     var pritrauktas : Int = 0
     var rnds = (1..10).random()
+
+    var proc = (10..100).random()
+
 
 
     var but2 : Int = 0
@@ -44,7 +47,7 @@ class CathingFragment : Fragment() {
         binding.button2.visibility = VISIBLE
         but2 = binding.button2.visibility;
         binding.button2.isClickable = true
-        val TAG = "MyActivity";
+       // val TAG = "MyActivity";
 
 
 
@@ -92,14 +95,15 @@ class CathingFragment : Fragment() {
                         }
                     binding.Meskere.y = y;
                 }
-                Log.v("TAG","MesYR: "+ binding.Meskere.y.toString());
-                Log.v("Tag","MesYR: "+ binding.Meskere.x.toString());
+             //   Log.v("TAG","MesYR: "+ binding.Meskere.y.toString());
+             //   Log.v("Tag","MesYR: "+ binding.Meskere.x.toString());
 
                 MX  = binding.Meskere.x;
                 MY = binding.Meskere.y;
 
                 pritrauktas = savedInstanceState.getInt("Pritraukta");
                 rnds = savedInstanceState.getInt("Reikia");
+                proc = savedInstanceState.getInt("Procentai");
                 binding.imageView2.visibility = savedInstanceState.getInt("Rodykle");
                 imv2 = binding.imageView2.visibility;
                 binding.imageView2.rotation = savedInstanceState.getFloat("RodykleSukimas")
@@ -136,7 +140,7 @@ class CathingFragment : Fragment() {
                 suka(binding)
                 if (kimba) {
                     binding.button2.isClickable = false
-                    binding.button2.isVisible = false
+                    binding.button2.visibility = INVISIBLE
                     but2 = binding.button2.visibility;
                     binding.imageView2.isVisible = true
                     binding.imageView2.visibility = VISIBLE
@@ -159,9 +163,6 @@ class CathingFragment : Fragment() {
     }
     var xDown = 0f
     var yDown = 0f
-    var xUP = 0f
-    var yUP = 0f
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -177,7 +178,7 @@ class CathingFragment : Fragment() {
         val kaire = 0
 
 
-        binding.Meskere.setOnTouchListener(OnTouchListener { v, event ->
+        binding.Meskere.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_MOVE) {
                 val xMove: Float = event.x
                 val yMove: Float = event.y
@@ -185,25 +186,25 @@ class CathingFragment : Fragment() {
                 val distX: Float = xMove - xDown
                 val distY: Float = yMove - yDown
 
-                if(binding.Meskere.x + distX + desine < screenWidth &&  binding.Meskere.getX() + distX > kaire){
+                if (binding.Meskere.x + distX + desine < screenWidth && binding.Meskere.getX() + distX > kaire) {
                     binding.Meskere.x = binding.Meskere.x + distX
-                    MX  = binding.Meskere.x;
+                    MX = binding.Meskere.x;
                 }
-                if(binding.Meskere.y + distY + apacia < screenHeight &&  binding.Meskere.getY() + distY > - virsus){
+                if (binding.Meskere.y + distY + apacia < screenHeight && binding.Meskere.getY() + distY > -virsus) {
                     binding.Meskere.y = binding.Meskere.y + distY
-                    MY  = binding.Meskere.y;
+                    MY = binding.Meskere.y;
                 }
 
 
                 if (binding.imageView2.rotation == 0F) {
                     if (isRight(screenWidth, screenHeight, binding)) {
-                       // val TAG = "MyActivity";
+                        // val TAG = "MyActivity";
                         binding.imageView2.visibility = INVISIBLE
                         imv2 = binding.imageView2.visibility
                         suka(binding)
-                       // Log.v(TAG,suka().toString())
+                        // Log.v(TAG,suka().toString())
                         //     Log.v(TAG,"Rigth")
-                     //   Log.v(TAG, binding.imageView2.rotation.toString())
+                        //   Log.v(TAG, binding.imageView2.rotation.toString())
                     }
                 }
                 if (binding.imageView2.rotation == 180F) {
@@ -247,7 +248,7 @@ class CathingFragment : Fragment() {
             }
             true
 
-        });
+        };
 
     }
 
@@ -260,34 +261,77 @@ class CathingFragment : Fragment() {
         binding.imageView2.rotation = list[randomIndex]
         imv2r = binding.imageView2.rotation;
        // Toast.makeText(activity, "$pritrauktas/$rnds", Toast.LENGTH_SHORT).show()
-        if (pritrauktas == rnds){
+        if (proc  >= pritrauktas * 10) {
+            if (pritrauktas == rnds) {
+                val action =
+                    CathingFragmentDirections.actionCathingFragmentToFishFragment()
+                findNavController().navigate(action)
+            } else {
+                val list = listOf(90F, 180F, 0F, 270F)
+                val randomIndex = Random.nextInt(list.size);
+
+                binding.imageView2.rotation = list[randomIndex]
+                imv2r = binding.imageView2.rotation;
+                binding.imageView2.visibility = VISIBLE
+                imv2 = binding.imageView2.visibility
+            }
+        }
+        else {
             val action =
-                CathingFragmentDirections.actionCathingFragmentToFishFragment()
+                CathingFragmentDirections.actionCathingFragmentToFailedFragment()
             findNavController().navigate(action)
         }
-        else{
-            val list = listOf(90F, 180F, 0F, 270F)
-            val randomIndex = Random.nextInt(list.size);
-
-            binding.imageView2.rotation = list[randomIndex]
-            imv2r = binding.imageView2.rotation;
-            binding.imageView2.visibility = VISIBLE
-            imv2 = binding.imageView2.visibility
-        }
     }
-    private fun suka(binding: FragmentCathingBinding) {
-        // implement a setOnLongClickListener to the
-        // button that creates a Toast and
-        // returns true when actually long-pressed
 
-        if (binding.imageView2.visibility == INVISIBLE) {
-            binding.Rite.setOnLongClickListener {
-                //  Toast.makeText(activity, "Button Long Pressed", Toast.LENGTH_SHORT).show()
-                if (binding.imageView2.visibility == INVISIBLE) {
-                    change(binding)
+    @SuppressLint("ClickableViewAccessibility")
+    private fun suka(binding: FragmentCathingBinding) {
+        var duration : Long? = null
+        var soundPool : SoundPool ?= SoundPool(5, AudioManager.STREAM_MUSIC, 0)
+        var soundId = soundPool?.load(context, com.example.fishinggame.R.raw.ritesgarsas, 1)
+
+        if (binding.imageView2.visibility == INVISIBLE && binding.button2.visibility == INVISIBLE && imv2 == INVISIBLE) {
+            binding.Rite.setOnTouchListener() {v, event ->
+             if (binding.imageView2.visibility == INVISIBLE) {
+                    if (event.action == MotionEvent.ACTION_DOWN) {
+                        duration = System.currentTimeMillis()
+                        if (soundPool != null) {
+                            soundPool?.play(soundId!!, 1F, 1F, 0, 10, 1F)
+
+                        }
+                        else {
+                           // Toast.makeText(activity, "jo", Toast.LENGTH_SHORT).show()
+                            soundPool = SoundPool(5, AudioManager.STREAM_MUSIC, 0)
+                            soundId = soundPool?.load(context, com.example.fishinggame.R.raw.ritesgarsas, 1)
+                            soundPool?.play(soundId!!, 1F, 1F, 0, 10, 1F)
+
+                        }
+
+
+                    }
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        if (duration != null && System.currentTimeMillis() - duration!! >= 500) {
+                            binding.Rite.performLongClick()
+                        }
+
+                        soundPool?.pause(soundId!!)
+                        soundPool?.release();
+                        soundPool = null;
+                    }
                 }
                 true
             }
+            binding.Rite.setOnLongClickListener {
+
+                //  Toast.makeText(activity, "Button Long Pressed", Toast.LENGTH_SHORT).show()
+                if (binding.imageView2.visibility == INVISIBLE) {
+
+                    change(binding)
+                }
+
+                true
+            }
+
+
         }
     }
     private fun isRight(sx: Int, sy: Int, binding: FragmentCathingBinding): Boolean {
@@ -316,6 +360,7 @@ class CathingFragment : Fragment() {
      outState.putFloat("Y", MY)
     outState.putInt("Pritraukta", pritrauktas)
         outState.putInt("Reikia", rnds)
+        outState.putInt("Procentai", proc)
     }
 
 }

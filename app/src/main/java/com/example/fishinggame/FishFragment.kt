@@ -314,6 +314,7 @@ class FishFragment : Fragment() {
       //  viewModel.savePinigai(0F);
         //  viewModel.saveKiekis(0);
           // viewModel.saveLaikai("");
+      //  viewModel.saveEzerai("");
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             viewModel.savePinigai(sk + dd);
             viewModel.saveKiekis(kiekis + 1);
@@ -336,17 +337,6 @@ class FishFragment : Fragment() {
 
         return binding.root
     }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//
-//
-//        outState.putFloat("Pinigai",sk);
-//        outState.putInt("Kiekis", kiekis);
-//
-//        outState.putString("Laikas", Laikas)
-//    }
-
 
 
 }

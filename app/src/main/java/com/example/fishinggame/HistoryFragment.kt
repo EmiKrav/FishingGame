@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fishinggame.databinding.FragmentGameScreenBinding
 import com.example.fishinggame.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
@@ -32,13 +31,13 @@ class HistoryFragment : Fragment() {
 
         viewModel.getPinigai.observe(viewLifecycleOwner) {
             val p = String.format("%.2f", it)
-            binding.Pinigai.text = "Pinigai: $p €";
+            binding.Pinigai.text = "Money: $p €";
         }
         viewModel.getKiekis.observe(viewLifecycleOwner) {
 
-            binding.Kiekis.text = "Kiekis: $it";
+            binding.Kiekis.text = "Fishes: $it";
         }
-        binding.Laikai.text = "Laikai: ";
+        binding.Laikai.text = "Times: ";
         viewModel.getLaikai.observe(viewLifecycleOwner) {
 
             Laikas = it;

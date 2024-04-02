@@ -16,9 +16,9 @@
     </fragment>
     <fragment
         android:id="@+id/gameScreenFragment"
-        android:name="com.example.fishinggame.GameScreenFragment"
+        android:name="com.example.fishinggame.TiltasFragment"
         android:label="fragment_game_screen"
-        tools:layout="@layout/fragment_game_screen" >
+        tools:layout="@layout/fragment_tiltas" >
         <action
             android:id="@+id/action_gameScreenFragment_to_cathingFragment"
             app:destination="@id/cathingFragment" />
@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_cathingFragment_to_gameScreenFragment"
             app:destination="@id/gameScreenFragment" />
+        <action
+            android:id="@+id/action_cathingFragment_to_failedFragment"
+            app:destination="@id/failedFragment" />
     </fragment>
     <fragment
         android:id="@+id/fishFragment"
@@ -62,6 +65,9 @@
         <action
             android:id="@+id/action_menuFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -72,4 +78,18 @@
             android:id="@+id/action_historyFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/failedFragment"
+        android:name="com.example.fishinggame.FailedFragment"
+        android:label="fragment_failed"
+        tools:layout="@layout/fragment_failed" >
+        <action
+            android:id="@+id/action_failedFragment_to_gameScreenFragment"
+            app:destination="@id/gameScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.example.fishinggame.ShopFragment"
+        android:label="fragment_shop"
+        tools:layout="@layout/fragment_shop" />
 </navigation>

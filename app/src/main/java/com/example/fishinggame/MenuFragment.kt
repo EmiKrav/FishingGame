@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
-import com.example.fishinggame.databinding.FragmentGameScreenBinding
 import com.example.fishinggame.databinding.FragmentMenuBinding
 import kotlin.system.exitProcess
 
@@ -48,7 +47,12 @@ class MenuFragment : Fragment() {
                 activity?.finish();
                 exitProcess(0);
         }
-
+        binding.button7
+            .setOnClickListener {
+                val action =
+                    MenuFragmentDirections.actionMenuFragmentToShopFragment()
+                findNavController().navigate(action)
+            }
         return binding.root
     }
 

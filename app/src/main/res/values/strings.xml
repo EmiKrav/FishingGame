@@ -57,4 +57,10 @@
     <string name="Kiekis">0</string>
     <string name="laikas">Laikas</string>
     <string name="laikai">Laikai:</string>
+    <string name="shop">Shop</string>
+    <string name="buy">Buy</string>
+    <string name="lake">Lake</string>
+    <string name="name">Name</string>
+    <string name="_0_eur">0 Eur</string>
+    <string name="change_of_location">change of location</string>
 </resources>
