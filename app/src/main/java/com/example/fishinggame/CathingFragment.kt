@@ -24,7 +24,7 @@ class CathingFragment : Fragment() {
     var pritrauktas : Int = 0
     var rnds = (1..10).random()
 
-    var proc = (10..100).random()
+    var proc = (50..100).random()
 
 
 

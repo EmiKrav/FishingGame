@@ -107,7 +107,7 @@ class TiltasFragment : Fragment() {
                     }
                     if (ezerai.contains(ShopList[current + i].Pavadinimas)) {
                         view?.setBackgroundResource(ShopList[current + i].Image);
-                        viewModel.savePaveiksliukas(current);
+                        viewModel.savePaveiksliukas(current + i);
                         current += i;
                         if(waitTimer != null) {
                             waitTimer!!.cancel();
