@@ -11,9 +11,11 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fishinggame.databinding.FragmentCathingBinding
 import kotlin.random.Random
@@ -33,6 +35,46 @@ class CathingFragment : Fragment() {
     var imv2r : Float = 0F;
     var MX : Float = 0F;
     var MY : Float = 0F;
+
+
+    var currentMeskere : Int = 0;
+
+    var currentRite : Int = 0;
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        var ShopList2: List<Shop> = listOf(
+            Shop("Starter Rod", 0F,false, com.example.fishinggame.R.drawable.rod),
+            Shop("Next Rod", 10F,true, com.example.fishinggame.R.drawable.rod2),
+            Shop("Super Rod", 30F,true, com.example.fishinggame.R.drawable.rod3),
+            Shop("Amazing Catcher", 100F,true, com.example.fishinggame.R.drawable.rod4),
+            Shop("Expensive Stick", 1000F,true, com.example.fishinggame.R.drawable.rod5)
+        )
+        var ShopList: List<Shop> = listOf(
+            Shop("Starter Rite", 0F,false, com.example.fishinggame.R.drawable.rite),
+            Shop("Cyan Rite", 20F,true, com.example.fishinggame.R.drawable.rite2)
+        )
+        //  current = savedInstanceState.getInt("Ezeras");
+        //  view?.setBackgroundResource(ShopList[current].Image);
+        //  }
+        // else{
+        val viewModel: DataStoreViewModel by viewModels()
+        viewModel.getMeskeresPaveiksliukas.observe(viewLifecycleOwner) {
+            currentMeskere = it;
+
+            val meskere = view?.findViewById<ImageView>(com.example.fishinggame.R.id.Meskere)
+            meskere?.setImageResource(ShopList2[currentMeskere].Image)
+
+        }
+        viewModel.getRitesPaveiksliukas.observe(viewLifecycleOwner) {
+            currentRite = it;
+
+            val rite = view?.findViewById<ImageView>(com.example.fishinggame.R.id.Rite)
+            rite?.setImageResource(ShopList[currentRite].Image)
+
+        }
+        // }
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

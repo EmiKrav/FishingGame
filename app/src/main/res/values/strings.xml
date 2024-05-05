@@ -63,4 +63,6 @@
     <string name="name">Name</string>
     <string name="_0_eur">0 Eur</string>
     <string name="change_of_location">change of location</string>
+    <string name="box">Box</string>
+    <string-array name="ShopChoices"></string-array>
 </resources>

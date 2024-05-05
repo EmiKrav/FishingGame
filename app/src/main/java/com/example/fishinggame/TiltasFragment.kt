@@ -7,6 +7,7 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,7 +23,8 @@ class TiltasFragment : Fragment() {
 
     var t1 : CountDownTimer? = null
     var current : Int = 0;
-
+    var currentMeskere : Int = 0;
+    var currentPlude : Int = 0;
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         var ShopList: List<Shop> = listOf(
@@ -30,7 +32,17 @@ class TiltasFragment : Fragment() {
             Shop("Mountains Lake", 100F,true, com.example.fishinggame.R.drawable.lake1),
             Shop("Green Place", 10F,true, com.example.fishinggame.R.drawable.lake2)
         )
-
+        var ShopList2: List<Shop> = listOf(
+            Shop("Starter Rod", 0F,false,R.drawable.rod),
+            Shop("Next Rod", 10F,true,R.drawable.rod2),
+            Shop("Super Rod", 30F,true,R.drawable.rod3),
+            Shop("Amazing Catcher", 100F,true,R.drawable.rod4),
+            Shop("Expensive Stick", 1000F,true,R.drawable.rod5)
+        )
+        var ShopList3: List<Shop> = listOf(
+            Shop("Starter Plude", 0F,false,R.drawable.plude2),
+            Shop("Next Plude", 2F,true,R.drawable.plude1)
+        )
           //  current = savedInstanceState.getInt("Ezeras");
           //  view?.setBackgroundResource(ShopList[current].Image);
       //  }
@@ -40,6 +52,20 @@ class TiltasFragment : Fragment() {
                 current = it;
                 view?.setBackgroundResource(ShopList[current].Image);
             }
+        viewModel.getMeskeresPaveiksliukas.observe(viewLifecycleOwner) {
+            currentMeskere = it;
+
+            val meskere = view?.findViewById<ImageView>(R.id.imageView)
+            meskere?.setImageResource(ShopList2[currentMeskere].Image)
+
+        }
+        viewModel.getPludesPaveiksliukas.observe(viewLifecycleOwner) {
+            currentPlude = it;
+
+            val plude = view?.findViewById<ImageView>(R.id.imageView4)
+            plude?.setImageResource(ShopList3[currentPlude].Image)
+
+        }
        // }
 
     }
@@ -130,6 +156,26 @@ class TiltasFragment : Fragment() {
                     }
                 }
             }
+        binding.imageView5
+            .setOnClickListener {
+
+                    if(waitTimer != null) {
+                        waitTimer!!.cancel();
+                        waitTimer = null;
+                    }
+                    if(anim != null) {
+                        anim!!.cancel();
+                        anim = null;
+                    }
+                    if(t1 != null) {
+                        t1!!.cancel();
+                        t1 = null;
+                    }
+                    val action =
+                        TiltasFragmentDirections.actionGameScreenFragmentToGearFragment()
+                    findNavController().navigate(action)
+                }
+
         binding.imageView
            .setOnClickListener {
                if (kibimas) {
@@ -178,21 +224,29 @@ class TiltasFragment : Fragment() {
         return binding.root
     }
     @SuppressLint("SuspiciousIndentation")
+
     fun animacija(binding: FragmentTiltasBinding, pozicija: Float){
+        var nauja = pozicija
         val dur = 3000
-          anim = ObjectAnimator.ofFloat(binding.imageView4, "translationX", pozicija).apply {
-                duration = dur.toLong()
-                start()
-            }
 
         t1 = object : CountDownTimer(dur.toLong()+3000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 if (millisUntilFinished < (dur.toLong()+3000)) {
                     kibimas = true;
                 }
+                if (millisUntilFinished > 2000 ) {
+                    anim = ObjectAnimator.ofFloat(binding.imageView4, "translationX", nauja).apply {
+                        duration = 1000.toLong()
+                        start()
+                    }
+                    nauja -= 2 * nauja
+                }
             }
             override fun onFinish() {
-
+                if(anim != null) {
+                    anim!!.cancel();
+                    anim = null;
+                }
                 kibimas = false;
                 binding.textView.text = "Too late!"
                 ObjectAnimator.ofFloat(binding.imageView4, "translationX", 0F).apply {
@@ -203,7 +257,6 @@ class TiltasFragment : Fragment() {
                 var laikokoluzkibs = rnds.toLong();
 
                 timeris(binding, laikokoluzkibs);
-
             }
         }.start()
     }
@@ -220,7 +273,7 @@ class TiltasFragment : Fragment() {
             }
             override fun onFinish() {
                 kibimas = false
-                val rnds = (-10000..10000).random()
+                val rnds = (-3000..3000).random()
                 var poz = rnds.toFloat();
                 animacija(binding, poz)
             }

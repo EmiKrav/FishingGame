@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_gameScreenFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_gameScreenFragment_to_gearFragment"
+            app:destination="@id/gearFragment" />
     </fragment>
     <fragment
         android:id="@+id/cathingFragment"
@@ -92,4 +95,13 @@
         android:name="com.example.fishinggame.ShopFragment"
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" />
+    <fragment
+        android:id="@+id/gearFragment"
+        android:name="com.example.fishinggame.GearFragment"
+        android:label="fragment_gear"
+        tools:layout="@layout/fragment_gear" >
+        <action
+            android:id="@+id/action_gearFragment_to_gameScreenFragment"
+            app:destination="@id/gameScreenFragment" />
+    </fragment>
 </navigation>

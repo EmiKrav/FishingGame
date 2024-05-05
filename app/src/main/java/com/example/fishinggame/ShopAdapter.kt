@@ -18,8 +18,6 @@ class ShopAdapter(val lifecycleOwner: LifecycleOwner,
                   private val viewModel: DataStoreViewModel, val lakes: List<Shop>):
     RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
 
-
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)  {
 
         val Pavadinimas = view.findViewById(R.id.Pavadinimas) as TextView
@@ -63,9 +61,6 @@ class ShopAdapter(val lifecycleOwner: LifecycleOwner,
             holder.Button.visibility = View.VISIBLE
             holder.Button.isClickable = true
         }
-
-
-
 
         holder.Button.setOnClickListener {
             if (data.Kaina <= p){
