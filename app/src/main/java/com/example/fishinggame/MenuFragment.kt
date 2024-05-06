@@ -1,14 +1,18 @@
 package com.example.fishinggame
 
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.media.SoundPool
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.fishinggame.databinding.FragmentMenuBinding
 import kotlin.system.exitProcess
+
 
 class MenuFragment : Fragment() {
     var sk: Float = 0F
@@ -23,6 +27,13 @@ class MenuFragment : Fragment() {
 
         val binding = FragmentMenuBinding.inflate(inflater)
 
+        var sk = Music.CurrentTR()
+        if (sk != 1){
+            Music.stopMusic()
+            context?.let { Music.CreateMusic(it) }
+            Music.playMusic()
+        }
+
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             val action =
@@ -32,6 +43,7 @@ class MenuFragment : Fragment() {
 
         binding.button4
             .setOnClickListener {
+                Music.stopMusic()
                 val action =
                     MenuFragmentDirections.actionMenuFragmentToGameScreenFragment()
                 findNavController().navigate(action)
@@ -44,6 +56,7 @@ class MenuFragment : Fragment() {
             }
         binding.button5
             .setOnClickListener {
+                Music.stopMusic()
                 activity?.finish();
                 exitProcess(0);
         }

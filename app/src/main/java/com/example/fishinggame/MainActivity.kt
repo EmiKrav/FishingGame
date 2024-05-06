@@ -1,8 +1,11 @@
 package com.example.fishinggame
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +26,18 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
+//        Music.CreateMusic(this)
+//        Music.playMusic()
         }
+
+
+//    override fun onResumeFragments() {
+//        super.onResumeFragments()
+//
+//        Music.playMusc(this,true)
+//    }
+
+
 
 
 }

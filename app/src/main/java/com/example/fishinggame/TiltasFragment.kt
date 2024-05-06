@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fishinggame.databinding.FragmentTiltasBinding
+import kotlinx.coroutines.flow.callbackFlow
 
 
 class TiltasFragment : Fragment() {
@@ -26,23 +27,12 @@ class TiltasFragment : Fragment() {
     var currentMeskere : Int = 0;
     var currentPlude : Int = 0;
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+
         super.onActivityCreated(savedInstanceState)
-        var ShopList: List<Shop> = listOf(
-            Shop("Beginer's Bridge", 0F,false, com.example.fishinggame.R.drawable.tiltas),
-            Shop("Mountains Lake", 100F,true, com.example.fishinggame.R.drawable.lake1),
-            Shop("Green Place", 10F,true, com.example.fishinggame.R.drawable.lake2)
-        )
-        var ShopList2: List<Shop> = listOf(
-            Shop("Starter Rod", 0F,false,R.drawable.rod),
-            Shop("Next Rod", 10F,true,R.drawable.rod2),
-            Shop("Super Rod", 30F,true,R.drawable.rod3),
-            Shop("Amazing Catcher", 100F,true,R.drawable.rod4),
-            Shop("Expensive Stick", 1000F,true,R.drawable.rod5)
-        )
-        var ShopList3: List<Shop> = listOf(
-            Shop("Starter Plude", 0F,false,R.drawable.plude2),
-            Shop("Next Plude", 2F,true,R.drawable.plude1)
-        )
+        var ShopList = Data.getPlaces()
+        var ShopList2 = Data.getRods()
+        var ShopList3 = Data.getFloats()
           //  current = savedInstanceState.getInt("Ezeras");
           //  view?.setBackgroundResource(ShopList[current].Image);
       //  }
@@ -76,22 +66,23 @@ class TiltasFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var ShopList: List<Shop> = listOf(
-            Shop("Beginer's Bridge", 0F,false, com.example.fishinggame.R.drawable.tiltas),
-            Shop("Mountains Lake", 100F,true, com.example.fishinggame.R.drawable.lake1),
-            Shop("Green Place", 10F,true, com.example.fishinggame.R.drawable.lake2)
-        )
+        var ShopList = Data.getPlaces()
         kibimas = false
         val binding = FragmentTiltasBinding.inflate(inflater)
         val viewModel: DataStoreViewModel by viewModels()
 
-
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            val action =
-                TiltasFragmentDirections.actionGameScreenFragmentToMenuFragment()
-            findNavController().navigate(action)
+        var sk = Music.CurrentTR()
+        if (sk != 2){
+            context?.let { Music.CreateMusic2(it) }
+            Music.playMusic()
         }
+
+       requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                   val action =
+                       TiltasFragmentDirections.actionGameScreenFragmentToMenuFragment()
+                   findNavController().navigate(action)
+
+       }
 
 
         val rnds = (3000..10000).random()
@@ -192,6 +183,7 @@ class TiltasFragment : Fragment() {
                        t1!!.cancel();
                        t1 = null;
                    }
+                   Music.pauseMusic()
                    val action =
                        TiltasFragmentDirections.actionGameScreenFragmentToCathingFragment()
                    findNavController().navigate(action)
@@ -279,5 +271,6 @@ class TiltasFragment : Fragment() {
             }
         }.start()
     }
+
 
 }

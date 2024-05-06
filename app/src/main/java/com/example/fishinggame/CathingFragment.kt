@@ -1,6 +1,5 @@
 package com.example.fishinggame
 
-import android.R
 import android.annotation.SuppressLint
 import android.media.AudioManager
 import android.media.SoundPool
@@ -12,7 +11,6 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,19 +38,14 @@ class CathingFragment : Fragment() {
     var currentMeskere : Int = 0;
 
     var currentRite : Int = 0;
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var ShopList2: List<Shop> = listOf(
-            Shop("Starter Rod", 0F,false, com.example.fishinggame.R.drawable.rod),
-            Shop("Next Rod", 10F,true, com.example.fishinggame.R.drawable.rod2),
-            Shop("Super Rod", 30F,true, com.example.fishinggame.R.drawable.rod3),
-            Shop("Amazing Catcher", 100F,true, com.example.fishinggame.R.drawable.rod4),
-            Shop("Expensive Stick", 1000F,true, com.example.fishinggame.R.drawable.rod5)
-        )
-        var ShopList: List<Shop> = listOf(
-            Shop("Starter Rite", 0F,false, com.example.fishinggame.R.drawable.rite),
-            Shop("Cyan Rite", 20F,true, com.example.fishinggame.R.drawable.rite2)
-        )
+        var ShopList2 = Data.getRods()
+        var ShopList = Data.getReels()
+
+
         //  current = savedInstanceState.getInt("Ezeras");
         //  view?.setBackgroundResource(ShopList[current].Image);
         //  }
@@ -328,25 +321,25 @@ class CathingFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun suka(binding: FragmentCathingBinding) {
         var duration : Long? = null
-        var soundPool : SoundPool ?= SoundPool(5, AudioManager.STREAM_MUSIC, 0)
+        var soundPool : SoundPool ?= SoundPool(1, AudioManager.STREAM_MUSIC, 0)
         var soundId = soundPool?.load(context, com.example.fishinggame.R.raw.ritesgarsas, 1)
 
         if (binding.imageView2.visibility == INVISIBLE && binding.button2.visibility == INVISIBLE && imv2 == INVISIBLE) {
             binding.Rite.setOnTouchListener() {v, event ->
              if (binding.imageView2.visibility == INVISIBLE) {
                     if (event.action == MotionEvent.ACTION_DOWN) {
+                        binding.Rite.performClick()
                         duration = System.currentTimeMillis()
-                        if (soundPool != null) {
-                            soundPool?.play(soundId!!, 1F, 1F, 0, 10, 1F)
 
-                        }
-                        else {
-                           // Toast.makeText(activity, "jo", Toast.LENGTH_SHORT).show()
-                            soundPool = SoundPool(5, AudioManager.STREAM_MUSIC, 0)
-                            soundId = soundPool?.load(context, com.example.fishinggame.R.raw.ritesgarsas, 1)
-                            soundPool?.play(soundId!!, 1F, 1F, 0, 10, 1F)
+                        soundPool?.play(soundId!!, 1F, 1F, 0, 10, 1F)
 
-                        }
+//                        else {
+////                            //Toast.makeText(activity, "jo", Toast.LENGTH_SHORT).show()
+//                            soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
+//                            soundId = soundPool?.load(context, com.example.fishinggame.R.raw.ritesgarsas, 1)
+//                            soundPool?.play(soundId!!, 1F, 1F, 0, 10, 1F)
+//
+//                        }
 
 
                     }
@@ -355,9 +348,7 @@ class CathingFragment : Fragment() {
                             binding.Rite.performLongClick()
                         }
 
-                        soundPool?.pause(soundId!!)
-                        soundPool?.release();
-                        soundPool = null;
+                        soundPool?.autoPause()
                     }
                 }
                 true

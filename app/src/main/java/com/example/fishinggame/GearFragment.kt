@@ -18,25 +18,9 @@ class GearFragment : Fragment() {
     var currentPlude : Int = 0;
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var ShopList: List<Shop> = listOf(
-            Shop("Starter Rod", 0F,false,R.drawable.rod),
-            Shop("Next Rod", 10F,true,R.drawable.rod2),
-            Shop("Super Rod", 30F,true,R.drawable.rod3),
-            Shop("Amazing Catcher", 100F,true,R.drawable.rod4),
-            Shop("Expensive Stick", 1000F,true,R.drawable.rod5)
-        )
-        var ShopList2: List<Shop> = listOf(
-            Shop("Starter Rite", 0F,false,R.drawable.rite),
-            Shop("Cyan Rite", 20F,true,R.drawable.rite2)
-        )
-        var ShopList3: List<Shop> = listOf(
-            Shop("Starter Plude", 0F,false,R.drawable.plude2),
-            Shop("Next Plude", 2F,true,R.drawable.plude1)
-        )
-        //  current = savedInstanceState.getInt("Ezeras");
-        //  view?.setBackgroundResource(ShopList[current].Image);
-        //  }
-        // else{
+        var ShopList = Data.getRods()
+        var ShopList2 = Data.getReels()
+        var ShopList3 = Data.getFloats()
         val viewModel: DataStoreViewModel by viewModels()
         viewModel.getMeskeresPaveiksliukas.observe(viewLifecycleOwner) {
             current = it;
@@ -66,21 +50,9 @@ class GearFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var ShopList: List<Shop> = listOf(
-            Shop("Starter Rod", 0F,false,R.drawable.rod),
-            Shop("Next Rod", 10F,true,R.drawable.rod2),
-            Shop("Super Rod", 30F,true,R.drawable.rod3),
-            Shop("Amazing Catcher", 100F,true,R.drawable.rod4),
-            Shop("Expensive Stick", 1000F,true,R.drawable.rod5)
-        )
-        var ShopList2: List<Shop> = listOf(
-            Shop("Starter Rite", 0F,false,R.drawable.rite),
-            Shop("Cyan Rite", 20F,true,R.drawable.rite2)
-        )
-        var ShopList3: List<Shop> = listOf(
-            Shop("Starter Plude", 0F,false,R.drawable.plude2),
-            Shop("Next Plude", 2F,true,R.drawable.plude1)
-        )
+        var ShopList = Data.getRods()
+        var ShopList2 = Data.getReels()
+        var ShopList3 = Data.getFloats()
         val binding = FragmentGearBinding.inflate(inflater)
         val viewModel: DataStoreViewModel by viewModels()
 

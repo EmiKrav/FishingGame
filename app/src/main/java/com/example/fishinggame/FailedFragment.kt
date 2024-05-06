@@ -29,6 +29,7 @@ class FailedFragment : Fragment() {
                 findNavController().navigate(action)
             }
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+
             val action =
                 FailedFragmentDirections.actionFailedFragmentToGameScreenFragment()
             findNavController().navigate(action)

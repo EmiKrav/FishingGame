@@ -60,10 +60,10 @@ class ShopFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(context)
 
         var subjects: MutableList<String?> = ArrayList();
-        subjects.add("Vietos")
-        subjects.add("Meškerės")
-        subjects.add("Ritės")
-        subjects.add("Plūdės")
+        subjects.add("Places")
+        subjects.add("Rods")
+        subjects.add("Reels")
+        subjects.add("Floats")
 
         var adapter: ArrayAdapter<String?>?
         adapter = ArrayAdapter<String?>(
@@ -77,11 +77,7 @@ class ShopFragment : Fragment() {
 
 
         var e : String = ""
-        var ShopList: List<Shop> = listOf(
-            Shop("Beginer's Bridge", 0F,false,R.drawable.tiltas),
-            Shop("Mountains Lake", 100F,true,R.drawable.lake1),
-            Shop("Green Place", 10F,true,R.drawable.lake2)
-        )
+        var ShopList = Data.getPlaces()
         viewModel.getEzerai.observe(viewLifecycleOwner) {
             e = it;
         }
@@ -90,13 +86,7 @@ class ShopFragment : Fragment() {
                 ShopList[i].Nupirkti = false
             }
         }
-        var ShopList2: List<Shop> = listOf(
-            Shop("Starter Rod", 0F,false,R.drawable.rod),
-            Shop("Next Rod", 10F,true,R.drawable.rod2),
-            Shop("Super Rod", 30F,true,R.drawable.rod3),
-            Shop("Amazing Catcher", 100F,true,R.drawable.rod4),
-            Shop("Expensive Stick", 1000F,true,R.drawable.rod5)
-        )
+        var ShopList2 = Data.getRods()
         viewModel.getMeskeres.observe(viewLifecycleOwner) {
             e = it;
         }
@@ -105,10 +95,7 @@ class ShopFragment : Fragment() {
                 ShopList2[i].Nupirkti = false
             }
         }
-        var ShopList3: List<Shop> = listOf(
-            Shop("Starter Rite", 0F,false,R.drawable.rite),
-            Shop("Cyan Rite", 20F,true,R.drawable.rite2)
-        )
+        var ShopList3 = Data.getReels()
         viewModel.getRites.observe(viewLifecycleOwner) {
             e = it;
         }
@@ -117,10 +104,7 @@ class ShopFragment : Fragment() {
                 ShopList3[i].Nupirkti = false
             }
         }
-        var ShopList4: List<Shop> = listOf(
-            Shop("Starter Plude", 0F,false,R.drawable.plude2),
-            Shop("Next Plude", 2F,true,R.drawable.plude1)
-        )
+        var ShopList4 = Data.getFloats()
         viewModel.getPludes.observe(viewLifecycleOwner) {
             e = it;
         }
@@ -130,7 +114,7 @@ class ShopFragment : Fragment() {
             }
         }
         recycler.adapter = ShopAdapter(viewLifecycleOwner,viewModel, ShopList)
-        var title = "Vietos";
+        var title = "Places";
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -139,17 +123,16 @@ class ShopFragment : Fragment() {
                 id: Long
             ) {
                 val text: String = parent?.getItemAtPosition(position).toString()
-                if (text == "Vietos"){
+                if (text == "Places"){
                     recycler.adapter = ShopAdapter(viewLifecycleOwner,viewModel, ShopList)
-
                 }
-                if (text == "Meškerės"){
+                if (text == "Rods"){
                     recycler.adapter = ShopAdapter2(viewLifecycleOwner,viewModel, ShopList2)
                 }
-                if (text == "Ritės"){
+                if (text == "Reels"){
                     recycler.adapter = ShopAdapter3(viewLifecycleOwner,viewModel, ShopList3)
                 }
-                if (text == "Plūdės"){
+                if (text == "Floats"){
                     recycler.adapter = ShopAdapter4(viewLifecycleOwner,viewModel, ShopList4)
                 }
 
