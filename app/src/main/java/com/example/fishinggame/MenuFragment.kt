@@ -57,6 +57,7 @@ class MenuFragment : Fragment() {
         binding.button5
             .setOnClickListener {
                 Music.stopMusic()
+
                 activity?.finish();
                 exitProcess(0);
         }
