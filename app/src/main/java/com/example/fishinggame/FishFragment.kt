@@ -173,7 +173,7 @@ class FishFragment : Fragment() {
                 viewModel.saveKiekis(kiekis + 1);
                 viewModel.saveLaikai(Laikas +  System.lineSeparator()+ LocalDateTime.now().
                 format(DateTimeFormatter.ofPattern("yyyy:MM:dd - HH:mm:ss")).toString() +
-                        System.lineSeparator() + pavadinimas + "      " + kk+" kg");
+                        System.lineSeparator() + pavadinimas + System.lineSeparator() + kk+" kg");
 
                 val action =
                     FishFragmentDirections.actionFishFragmentToGameScreenFragment()
