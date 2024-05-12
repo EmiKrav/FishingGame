@@ -1,6 +1,8 @@
 package com.example.fishinggame
 
 import android.annotation.SuppressLint
+import android.media.AudioManager
+import android.media.SoundPool
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
@@ -15,7 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 
-var scaleFactor = 1f
+var scaleFactor1 = 1F;
 class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
                    private val viewModel: DataStoreViewModel, val rods: List<Shop>):
     RecyclerView.Adapter<ShopAdapter2.ViewHolder>() {
@@ -50,6 +52,7 @@ class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
         holder.Price.text = data.Kaina.toString()
         holder.Picture.setImageResource(data.Image)
         holder.Picture.scaleType=ImageView.ScaleType.CENTER_INSIDE
+        holder.Picture.scaleX *=2;
 
 
 
@@ -69,9 +72,13 @@ class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
             holder.Button.visibility = View.VISIBLE
             holder.Button.isClickable = true
         }
+        var soundPool : SoundPool?= SoundPool(1, AudioManager.STREAM_MUSIC, 0)
+        var soundId = soundPool?.load(holder.Button.context, com.example.fishinggame.R.raw.buying, 1)
 
         holder.Button.setOnClickListener {
             if (data.Kaina <= p){
+                soundPool?.play(soundId!!, 1F, 1F, 0, 0, 1F)
+
                 viewModel.savePinigai(p -data.Kaina);
                 holder.Button.visibility = View.INVISIBLE
                 holder.Button.isClickable = false
@@ -98,7 +105,7 @@ class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
         holder.Picture.setOnLongClickListener {
 
 
-            holder.Picture.scaleX = 1F
+            holder.Picture.scaleX = 2F
             holder.Picture.scaleY = 1F
             true
         }
@@ -108,10 +115,10 @@ class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
     class ScaleListener(picture: ImageView) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
         var img = picture
         override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
-            scaleFactor *= scaleGestureDetector.scaleFactor
-            scaleFactor = Math.max(1f, Math.min(scaleFactor, 10.0f))
-            img.scaleX = 2 * scaleFactor
-            img.scaleY = scaleFactor
+            scaleFactor1 *= scaleGestureDetector.scaleFactor
+            scaleFactor1 = Math.max(1f, Math.min(scaleFactor1, 10.0f))
+            img.scaleX = scaleFactor1
+            img.scaleY = scaleFactor1
             return true
         }
 

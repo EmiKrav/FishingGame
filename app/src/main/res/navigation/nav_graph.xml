@@ -21,13 +21,15 @@
         tools:layout="@layout/fragment_tiltas" >
         <action
             android:id="@+id/action_gameScreenFragment_to_cathingFragment"
-            app:destination="@id/cathingFragment" />
+            app:destination="@id/cathingFragment"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_gameScreenFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
         <action
             android:id="@+id/action_gameScreenFragment_to_gearFragment"
-            app:destination="@id/gearFragment" />
+            app:destination="@id/gearFragment"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/cathingFragment"
@@ -36,13 +38,16 @@
         tools:layout="@layout/fragment_cathing" >
         <action
             android:id="@+id/action_cathingFragment_to_fishFragment"
-            app:destination="@id/fishFragment" />
+            app:destination="@id/fishFragment"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_cathingFragment_to_gameScreenFragment"
-            app:destination="@id/gameScreenFragment" />
+            app:destination="@id/gameScreenFragment"
+            app:enterAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_cathingFragment_to_failedFragment"
-            app:destination="@id/failedFragment" />
+            app:destination="@id/failedFragment"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/fishFragment"
@@ -61,7 +66,8 @@
         tools:layout="@layout/fragment_menu" >
         <action
             android:id="@+id/action_menuFragment_to_gameScreenFragment"
-            app:destination="@id/gameScreenFragment" />
+            app:destination="@id/gameScreenFragment"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_menuFragment_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
@@ -70,7 +76,8 @@
             app:destination="@id/historyFragment" />
         <action
             android:id="@+id/action_menuFragment_to_shopFragment"
-            app:destination="@id/shopFragment" />
+            app:destination="@id/shopFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -102,6 +109,7 @@
         tools:layout="@layout/fragment_gear" >
         <action
             android:id="@+id/action_gearFragment_to_gameScreenFragment"
-            app:destination="@id/gameScreenFragment" />
+            app:destination="@id/gameScreenFragment"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
 </navigation>

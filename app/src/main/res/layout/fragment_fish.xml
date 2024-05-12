@@ -23,7 +23,7 @@
         android:layout_width="362dp"
         android:layout_height="166dp"
         android:contentDescription="@string/Zuvis"
-        android:src="@drawable/fish"
+
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

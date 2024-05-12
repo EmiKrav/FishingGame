@@ -20,7 +20,11 @@ class FailedFragment : Fragment() {
 
 
         val binding = FragmentFailedBinding.inflate(inflater)
-
+        var muzsk = Music.CurrentTR()
+        if (muzsk != 4){
+            context?.let { Music.CreateMusic4(it) }
+            Music.playMusic()
+        }
 
         binding.button3
             .setOnClickListener {

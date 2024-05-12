@@ -75,7 +75,11 @@ class CathingFragment : Fragment() {
 
         var binding = FragmentCathingBinding.inflate(inflater);
 
-
+        var sk = Music.CurrentTR()
+        if (sk != 2){
+            context?.let { Music.CreateMusic2(it) }
+            Music.playMusic()
+        }
 
         binding.imageView2.visibility = INVISIBLE
         imv2 = binding.imageView2.visibility

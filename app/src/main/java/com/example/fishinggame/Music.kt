@@ -27,6 +27,20 @@ object Music {
         mediaPlayer?.isLooping = true
         sk = 2
     }
+    fun CreateMusic3(context: Context) {
+        mediaPlayer?.stop()
+        mediaPlayer=null
+        mediaPlayer = MediaPlayer.create(context, R.raw.spashing);
+        mediaPlayer?.isLooping = false
+        sk = 3
+    }
+    fun CreateMusic4(context: Context) {
+        mediaPlayer?.stop()
+        mediaPlayer=null
+        mediaPlayer = MediaPlayer.create(context, R.raw.fail);
+        mediaPlayer?.isLooping = false
+        sk = 4
+    }
     fun playMusic() {
         if (mediaPlayer?.isPlaying == true){
 

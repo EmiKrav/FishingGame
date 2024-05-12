@@ -183,7 +183,6 @@ class TiltasFragment : Fragment() {
                        t1!!.cancel();
                        t1 = null;
                    }
-                   Music.pauseMusic()
                    val action =
                        TiltasFragmentDirections.actionGameScreenFragmentToCathingFragment()
                    findNavController().navigate(action)

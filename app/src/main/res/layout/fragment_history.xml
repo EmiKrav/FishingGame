@@ -4,32 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A4C672"
+    android:background="@drawable/lake1"
     tools:context=".HistoryFragment">
 
     <TextView
         android:id="@+id/Pinigai"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/pinigai"
-        android:textSize="34sp"
         android:gravity="fill_horizontal"
+        android:text="@string/pinigai"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/Kiekis"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        app:layout_constrainedWidth="true"-->
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        app:layout_constrainedWidth="true"-->
 
     <TextView
         android:id="@+id/Kiekis"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/Kiekis"
+        android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/Laikai"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/laikai"
+        android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/Recy"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +55,7 @@
         android:id="@+id/Recy"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#89BCD1"
+        android:background="@drawable/notebook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

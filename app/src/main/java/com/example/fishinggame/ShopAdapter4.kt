@@ -1,6 +1,10 @@
 package com.example.fishinggame
 
+import android.media.AudioManager
+import android.media.SoundPool
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -9,6 +13,7 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 
+var scaleFactor4 = 1F;
 class ShopAdapter4 (val lifecycleOwner: LifecycleOwner,
                     private val viewModel: DataStoreViewModel, val pludes: List<Shop>):
 RecyclerView.Adapter<ShopAdapter4.ViewHolder>() {
@@ -56,15 +61,52 @@ RecyclerView.Adapter<ShopAdapter4.ViewHolder>() {
             holder.Button.visibility = View.VISIBLE
             holder.Button.isClickable = true
         }
+        var soundPool : SoundPool?= SoundPool(1, AudioManager.STREAM_MUSIC, 0)
+        var soundId = soundPool?.load(holder.Button.context, com.example.fishinggame.R.raw.buying, 1)
 
         holder.Button.setOnClickListener {
             if (data.Kaina <= p){
+                soundPool?.play(soundId!!, 1F, 1F, 0, 0, 1F)
+
                 viewModel.savePinigai(p -data.Kaina);
                 holder.Button.visibility = View.INVISIBLE
                 holder.Button.isClickable = false
                 viewModel.savePludes(e + data.Pavadinimas + System.lineSeparator());
             }
         }
+        var scale_g_detector: ScaleGestureDetector =
+            ScaleGestureDetector(holder.Picture.context, ShopAdapter2.ScaleListener(holder.Picture))
+        var duration : Long? = null
+        holder.Picture.setOnTouchListener { v, event ->
+            scale_g_detector.onTouchEvent(event);
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                duration = System.currentTimeMillis()
+            }
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (duration != null && System.currentTimeMillis() - duration!! >= 1000) {
+                    holder.Picture.performLongClick()
+                }
+            }
+            true
+        };
+        holder.Picture.setOnLongClickListener {
+
+
+            holder.Picture.scaleX = 1F
+            holder.Picture.scaleY = 1F
+            true
+        }
+    }
+    class ScaleListener(picture: ImageView) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        var img = picture
+        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
+            scaleFactor4 *= scaleGestureDetector.scaleFactor
+            scaleFactor4 = Math.max(1f, Math.min(scaleFactor4, 10.0f))
+            img.scaleX = scaleFactor4
+            img.scaleY = scaleFactor4
+            return true
+        }
+
     }
 
 }
