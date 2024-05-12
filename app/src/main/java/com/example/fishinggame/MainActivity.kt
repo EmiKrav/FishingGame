@@ -31,11 +31,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-//    override fun onResumeFragments() {
-//        super.onResumeFragments()
-//
-//        Music.playMusc(this,true)
-//    }
+    override fun onPause() {
+        super.onPause()
+        Music.pauseMusic()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Music.playMusic()
+    }
 
 
 
