@@ -1,5 +1,6 @@
 package com.example.fishinggame
 
+import android.annotation.SuppressLint
 import android.media.AudioManager
 import android.media.SoundPool
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
 var scaleFactor4 = 1F;
@@ -37,6 +39,9 @@ RecyclerView.Adapter<ShopAdapter4.ViewHolder>() {
                 .inflate(R.layout.item_shop, parent, false)
         )
     }
+
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = pludes[position]
         holder.Pavadinimas.text = data.Pavadinimas
@@ -64,6 +69,7 @@ RecyclerView.Adapter<ShopAdapter4.ViewHolder>() {
         var soundPool : SoundPool?= SoundPool(1, AudioManager.STREAM_MUSIC, 0)
         var soundId = soundPool?.load(holder.Button.context, com.example.fishinggame.R.raw.buying, 1)
 
+
         holder.Button.setOnClickListener {
             if (data.Kaina <= p){
                 soundPool?.play(soundId!!, 1F, 1F, 0, 0, 1F)
@@ -74,40 +80,45 @@ RecyclerView.Adapter<ShopAdapter4.ViewHolder>() {
                 viewModel.savePludes(e + data.Pavadinimas + System.lineSeparator());
             }
         }
-        var scale_g_detector: ScaleGestureDetector =
-            ScaleGestureDetector(holder.Picture.context, ShopAdapter2.ScaleListener(holder.Picture))
-        var duration : Long? = null
-        holder.Picture.setOnTouchListener { v, event ->
-            scale_g_detector.onTouchEvent(event);
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                duration = System.currentTimeMillis()
-            }
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (duration != null && System.currentTimeMillis() - duration!! >= 1000) {
-                    holder.Picture.performLongClick()
-                }
-            }
-            true
-        };
-        holder.Picture.setOnLongClickListener {
+//        var scale_g_detector: ScaleGestureDetector =
+//            ScaleGestureDetector(holder.Picture.context, ShopAdapter2.ScaleListener(holder.Picture))
+//        var duration : Long? = null
+
+        val action = ShopFragmentDirections.actionShopFragmentToShopBigItemFragment()
 
 
-            holder.Picture.scaleX = 1F
-            holder.Picture.scaleY = 1F
+//        holder.Picture.setOnTouchListener { v, event ->
+//            scale_g_detector.onTouchEvent(event);
+//            if (event.action == MotionEvent.ACTION_DOWN) {
+//                duration = System.currentTimeMillis()
+//            }
+//            if (event.action == MotionEvent.ACTION_UP) {
+//                if (duration != null && System.currentTimeMillis() - duration!! >= 1000) {
+//                    holder.Picture.performLongClick()
+//                }
+//            }
+//            true
+//        };
+        holder.Picture.setOnLongClickListener {view ->
+            view.findNavController().navigate(action)
+            Data.putPicture(holder.Picture.drawable)
+            Data.putPosition(position)
+//            holder.Picture.scaleX = 1F
+//            holder.Picture.scaleY = 1F
             true
         }
     }
-    class ScaleListener(picture: ImageView) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        var img = picture
-        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
-            scaleFactor4 *= scaleGestureDetector.scaleFactor
-            scaleFactor4 = Math.max(1f, Math.min(scaleFactor4, 10.0f))
-            img.scaleX = scaleFactor4
-            img.scaleY = scaleFactor4
-            return true
-        }
-
-    }
+//    class ScaleListener(picture: ImageView) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+//        var img = picture
+//        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
+//            scaleFactor4 *= scaleGestureDetector.scaleFactor
+//            scaleFactor4 = Math.max(1f, Math.min(scaleFactor4, 10.0f))
+//            img.scaleX = scaleFactor4
+//            img.scaleY = scaleFactor4
+//            return true
+//        }
+//
+//    }
 
 }
 

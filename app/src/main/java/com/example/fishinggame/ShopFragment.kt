@@ -11,11 +11,15 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy
 import com.example.fishinggame.databinding.FragmentShopBinding
+import javax.annotation.Nullable
 
 
 class ShopFragment : Fragment() {
 
+    var recycler : RecyclerView? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,8 +60,7 @@ class ShopFragment : Fragment() {
         }
         spinner.avoidDropdownFocus()
 
-        val recycler = binding.recyclerView
-        recycler.layoutManager = LinearLayoutManager(context)
+
 
         var subjects: MutableList<String?> = ArrayList();
         subjects.add("Places")
@@ -113,7 +116,21 @@ class ShopFragment : Fragment() {
                 ShopList4[i].Nupirkti = false
             }
         }
-        recycler.adapter = ShopAdapter(viewLifecycleOwner,viewModel, ShopList)
+        if (savedInstanceState !=null) {
+            recycler = binding.recyclerView
+            recycler?.layoutManager = LinearLayoutManager(context)
+            val scrollPosition = savedInstanceState.getInt("scrolled_position")
+            recycler?.smoothScrollToPosition(scrollPosition)
+        }
+        else {
+
+            recycler = binding.recyclerView
+            recycler!!.layoutManager = LinearLayoutManager(context)
+            //recycler!!.adapter?.stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            recycler!!.adapter = ShopAdapter(viewLifecycleOwner, viewModel, ShopList)
+        }
+
+
         var title = "Places";
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -124,17 +141,22 @@ class ShopFragment : Fragment() {
             ) {
                 val text: String = parent?.getItemAtPosition(position).toString()
                 if (text == "Places"){
-                    recycler.adapter = ShopAdapter(viewLifecycleOwner,viewModel, ShopList)
+                    recycler?.adapter = ShopAdapter(viewLifecycleOwner,viewModel, ShopList)
+                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
                 if (text == "Rods"){
-                    recycler.adapter = ShopAdapter2(viewLifecycleOwner,viewModel, ShopList2)
+                    recycler?.adapter = ShopAdapter2(viewLifecycleOwner, viewModel, ShopList2)
+                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
                 if (text == "Reels"){
-                    recycler.adapter = ShopAdapter3(viewLifecycleOwner,viewModel, ShopList3)
+                    recycler?.adapter = ShopAdapter3(viewLifecycleOwner,viewModel, ShopList3)
+                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
                 if (text == "Floats"){
-                    recycler.adapter = ShopAdapter4(viewLifecycleOwner,viewModel, ShopList4)
+                    recycler?.adapter = ShopAdapter4(viewLifecycleOwner,viewModel, ShopList4)
+                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
+
 
                 title = text;
           }
@@ -146,13 +168,16 @@ class ShopFragment : Fragment() {
 
         }
 
-
-
-
-
-
-
         return binding.root
     }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val layoutManager = recycler?.layoutManager as LinearLayoutManager
+        outState.putInt(
+            "scrolled_position",
+            layoutManager.findLastVisibleItemPosition()
+        )
+    }
+
 
 }

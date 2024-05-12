@@ -101,7 +101,11 @@
         android:id="@+id/shopFragment"
         android:name="com.example.fishinggame.ShopFragment"
         android:label="fragment_shop"
-        tools:layout="@layout/fragment_shop" />
+        tools:layout="@layout/fragment_shop" >
+        <action
+            android:id="@+id/action_shopFragment_to_shopBigItemFragment"
+            app:destination="@id/shopBigItemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gearFragment"
         android:name="com.example.fishinggame.GearFragment"
@@ -112,4 +116,9 @@
             app:destination="@id/gameScreenFragment"
             app:enterAnim="@android:anim/fade_in" />
     </fragment>
+    <fragment
+        android:id="@+id/shopBigItemFragment"
+        android:name="com.example.fishinggame.ShopBigItemFragment"
+        android:label="fragment_shop_big_item"
+        tools:layout="@layout/fragment_shop_big_item" />
 </navigation>

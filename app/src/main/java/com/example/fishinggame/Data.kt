@@ -1,6 +1,11 @@
 package com.example.fishinggame
 
+import android.graphics.drawable.Drawable
+
 object Data {
+
+    var daiktas : Drawable? = null;
+    var pozicija : Int? = null
     fun getRods(): List<Shop> {
         var ShopList: List<Shop> = listOf(
         Shop("Starter Rod", 0F,false,R.drawable.rod),
@@ -10,6 +15,20 @@ object Data {
         Shop("Expensive Stick", 1000F,true,R.drawable.rod5)
     )
         return ShopList
+    }
+    fun putPicture(shop : Drawable){
+        daiktas = shop
+    }
+    fun getPicture(): Drawable? {
+
+        return daiktas
+    }
+    fun putPosition(pos : Int){
+        pozicija = pos
+    }
+    fun getPosition(): Int? {
+
+        return pozicija
     }
     fun getReels(): List<Shop> {
         var ShopList2: List<Shop> = listOf(

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.example.fishinggame.databinding.FragmentFailedBinding
-import com.example.fishinggame.databinding.FragmentMainScreenBinding
 
 class FailedFragment : Fragment() {
 

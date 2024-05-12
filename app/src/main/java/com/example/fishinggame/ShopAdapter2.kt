@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
 var scaleFactor1 = 1F;
@@ -45,6 +46,8 @@ class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
 
         )
     }
+
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = rods[position]
@@ -75,6 +78,8 @@ class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
         var soundPool : SoundPool?= SoundPool(1, AudioManager.STREAM_MUSIC, 0)
         var soundId = soundPool?.load(holder.Button.context, com.example.fishinggame.R.raw.buying, 1)
 
+
+
         holder.Button.setOnClickListener {
             if (data.Kaina <= p){
                 soundPool?.play(soundId!!, 1F, 1F, 0, 0, 1F)
@@ -87,42 +92,47 @@ class ShopAdapter2(val lifecycleOwner: LifecycleOwner,
         }
 
 
-        var scale_g_detector: ScaleGestureDetector =
-            ScaleGestureDetector(holder.Picture.context, ScaleListener(holder.Picture))
-        var duration : Long? = null
-        holder.Picture.setOnTouchListener { v, event ->
-        scale_g_detector.onTouchEvent(event);
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                duration = System.currentTimeMillis()
-            }
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (duration != null && System.currentTimeMillis() - duration!! >= 1000) {
-                    holder.Picture.performLongClick()
-                }
-            }
-            true
-        };
-        holder.Picture.setOnLongClickListener {
+//        var scale_g_detector: ScaleGestureDetector =
+//            ScaleGestureDetector(holder.Picture.context, ScaleListener(holder.Picture))
+//        var duration : Long? = null
 
+        val action = ShopFragmentDirections.actionShopFragmentToShopBigItemFragment()
 
-            holder.Picture.scaleX = 2F
-            holder.Picture.scaleY = 1F
+//        holder.Picture.setOnTouchListener { v, event ->
+//        scale_g_detector.onTouchEvent(event);
+//            if (event.action == MotionEvent.ACTION_DOWN) {
+//                duration = System.currentTimeMillis()
+//            }
+//            if (event.action == MotionEvent.ACTION_UP) {
+//                if (duration != null && System.currentTimeMillis() - duration!! >= 1000) {
+//                    holder.Picture.performLongClick()
+//                }
+//            }
+//            true
+//        };
+        holder.Picture.setOnLongClickListener { view ->
+            view.findNavController().navigate(action)
+            Data.putPicture(holder.Picture.drawable)
+            Data.putPosition(position)
+
+//            holder.Picture.scaleX = 2F
+//            holder.Picture.scaleY = 1F
             true
         }
     }
 
 
-    class ScaleListener(picture: ImageView) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        var img = picture
-        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
-            scaleFactor1 *= scaleGestureDetector.scaleFactor
-            scaleFactor1 = Math.max(1f, Math.min(scaleFactor1, 10.0f))
-            img.scaleX = scaleFactor1
-            img.scaleY = scaleFactor1
-            return true
-        }
-
-    }
+//    class ScaleListener(picture: ImageView) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+//        var img = picture
+//        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
+//            scaleFactor1 *= scaleGestureDetector.scaleFactor
+//            scaleFactor1 = Math.max(1f, Math.min(scaleFactor1, 10.0f))
+//            img.scaleX = scaleFactor1
+//            img.scaleY = scaleFactor1
+//            return true
+//        }
+//
+//    }
 
 
 }
