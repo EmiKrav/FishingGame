@@ -78,6 +78,9 @@
             android:id="@+id/action_menuFragment_to_shopFragment"
             app:destination="@id/shopFragment"
             app:enterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_menuFragment_to_fishAlbumFragment"
+            app:destination="@id/fishAlbumFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -121,4 +124,9 @@
         android:name="com.example.fishinggame.ShopBigItemFragment"
         android:label="fragment_shop_big_item"
         tools:layout="@layout/fragment_shop_big_item" />
+    <fragment
+        android:id="@+id/fishAlbumFragment"
+        android:name="com.example.fishinggame.FishAlbumFragment"
+        android:label="fragment_fish_album"
+        tools:layout="@layout/fragment_fish_album" />
 </navigation>

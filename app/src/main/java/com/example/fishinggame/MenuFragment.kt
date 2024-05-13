@@ -67,6 +67,12 @@ class MenuFragment : Fragment() {
                     MenuFragmentDirections.actionMenuFragmentToShopFragment()
                 findNavController().navigate(action)
             }
+        binding.button10
+            .setOnClickListener {
+                val action =
+                    MenuFragmentDirections.actionMenuFragmentToFishAlbumFragment()
+                findNavController().navigate(action)
+            }
         return binding.root
     }
 

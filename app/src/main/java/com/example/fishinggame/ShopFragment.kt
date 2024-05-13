@@ -130,7 +130,6 @@ class ShopFragment : Fragment() {
             recycler!!.adapter = ShopAdapter(viewLifecycleOwner, viewModel, ShopList)
         }
 
-
         var title = "Places";
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -139,22 +138,21 @@ class ShopFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
+
+
                 val text: String = parent?.getItemAtPosition(position).toString()
+                Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 if (text == "Places"){
                     recycler?.adapter = ShopAdapter(viewLifecycleOwner,viewModel, ShopList)
-                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
                 if (text == "Rods"){
                     recycler?.adapter = ShopAdapter2(viewLifecycleOwner, viewModel, ShopList2)
-                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
                 if (text == "Reels"){
                     recycler?.adapter = ShopAdapter3(viewLifecycleOwner,viewModel, ShopList3)
-                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
                 if (text == "Floats"){
                     recycler?.adapter = ShopAdapter4(viewLifecycleOwner,viewModel, ShopList4)
-                    Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 }
 
 
