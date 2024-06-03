@@ -81,6 +81,9 @@
         <action
             android:id="@+id/action_menuFragment_to_fishAlbumFragment"
             app:destination="@id/fishAlbumFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_castFragment"
+            app:destination="@id/castFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -129,4 +132,9 @@
         android:name="com.example.fishinggame.FishAlbumFragment"
         android:label="fragment_fish_album"
         tools:layout="@layout/fragment_fish_album" />
+    <fragment
+        android:id="@+id/castFragment"
+        android:name="com.example.fishinggame.CastFragment"
+        android:label="fragment_cast"
+        tools:layout="@layout/fragment_cast" />
 </navigation>

@@ -60,8 +60,6 @@ class ShopFragment : Fragment() {
         }
         spinner.avoidDropdownFocus()
 
-
-
         var subjects: MutableList<String?> = ArrayList();
         subjects.add("Places")
         subjects.add("Rods")
@@ -139,7 +137,6 @@ class ShopFragment : Fragment() {
                 id: Long
             ) {
 
-
                 val text: String = parent?.getItemAtPosition(position).toString()
                 Data.getPosition()?.let { recycler?.smoothScrollToPosition(it) }
                 if (text == "Places"){
@@ -155,15 +152,11 @@ class ShopFragment : Fragment() {
                     recycler?.adapter = ShopAdapter4(viewLifecycleOwner,viewModel, ShopList4)
                 }
 
-
                 title = text;
           }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
-
-
         }
 
         return binding.root
